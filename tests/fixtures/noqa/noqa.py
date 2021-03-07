@@ -788,3 +788,5 @@ matrix = [
    some(number) for numbers in matrix
    for number in numbers # noqa: WPS361
 ]
+
+first, *_rest = some_collection  # noqa: WPS467

@@ -83,6 +83,7 @@ Summary
    EmptyCommentViolation
    BitwiseAndBooleanMixupViolation
    NewStyledDecoratorViolation
+   GettingFirstElementByUnpackingViolation
 
 Best practices
 --------------
@@ -154,6 +155,7 @@ Best practices
 .. autoclass:: EmptyCommentViolation
 .. autoclass:: BitwiseAndBooleanMixupViolation
 .. autoclass:: NewStyledDecoratorViolation
+.. autoclass:: GettingFirstElementByUnpackingViolation
 
 """
 
@@ -2572,3 +2574,33 @@ class NewStyledDecoratorViolation(ASTViolation):
 
     error_template = 'Found new-styled decorator'
     code = 466
+
+
+@final
+class GettingFirstElementByUnpackingViolation(ASTViolation):
+    """
+    Forbid getting first element using unpacking.
+
+    Reasoning:
+        Performance. Prefixing unused variables with underscore is nothing
+        more than convention, Python still creates these variables.
+        So, unpacking above makes a new unused list which is slow.
+
+    Solution:
+        Use `collection[0]` or `next(iter(collection))`
+
+    Example::
+
+        # Correct:
+        first = some_collection[0]
+        first = next(iter(collection))
+
+        # Wrong:
+        first, *_rest = some_collection
+
+    .. versionadded:: 0.16.0
+
+    """
+
+    error_template = 'Found incorrect unpacking target'
+    code = 467

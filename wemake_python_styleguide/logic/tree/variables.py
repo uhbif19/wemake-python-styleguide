@@ -1,5 +1,5 @@
 import ast
-from typing import Union
+from typing import List, Union
 
 from wemake_python_styleguide.logic import nodes
 
@@ -54,3 +54,17 @@ def _is_valid_single(node: _VarDefinition) -> bool:
         isinstance(node, ast.Name) or
         isinstance(node, ast.Starred) and isinstance(node.value, ast.Name)
     )
+
+
+def is_getting_first_element_by_unpacking(targets: List[ast.expr]) -> bool:
+    """Checks if unpacking targets used to get first element."""
+    return (
+        len(targets) == 2 and
+        isinstance(targets[0], ast.Name) and
+        isinstance(targets[1], ast.Starred) and
+        _is_unused_variable_name(targets[1].value)
+    )
+
+
+def _is_unused_variable_name(node: ast.expr) -> bool:
+    return isinstance(node, ast.Name) and node.id.startswith('_')

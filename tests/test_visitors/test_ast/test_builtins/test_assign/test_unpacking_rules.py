@@ -1,6 +1,7 @@
 import pytest
 
 from wemake_python_styleguide.violations.best_practices import (
+    GettingFirstElementByUnpackingViolation,
     SingleElementDestructuringViolation,
     WrongUnpackingViolation,
 )
@@ -274,3 +275,27 @@ def test_single_element_destructing(
         [SingleElementDestructuringViolation],
         ignored_types=UnpackingIterableToListViolation,
     )
+
+
+@pytest.mark.parametrize('code', [
+    spread_assignment2,
+])
+@pytest.mark.parametrize('definition', [
+    '_',
+    '_data',
+])
+def test_first_element_getting_by_unpacking(
+    assert_errors,
+    parse_ast_tree,
+    code,
+    definition,
+    default_options,
+    mode,
+):
+    """Testing that getting first element by unpacking is restricted."""
+    tree = parse_ast_tree(mode(code.format(definition)))
+
+    visitor = WrongAssignmentVisitor(default_options, tree=tree)
+    visitor.run()
+
+    assert_errors(visitor, [GettingFirstElementByUnpackingViolation])
