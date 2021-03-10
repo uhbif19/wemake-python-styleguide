@@ -17,6 +17,12 @@ Semantic versioning in our case means:
   change the client facing API, change code conventions signigicantly, etc.
 
 
+## 0.16.0
+
+### Features
+
+- Now `WPS227` forbids returning tuples that are too long
+
 ## 0.15.2
 
 ### Bugfixes

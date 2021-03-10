@@ -788,3 +788,7 @@ matrix = [
    some(number) for numbers in matrix
    for number in numbers # noqa: WPS361
 ]
+
+
+def foo2_func():
+    return (1, 2, 3, 4, 5, 6)  # noqa: WPS227
