@@ -2602,5 +2602,5 @@ class GettingFirstElementByUnpackingViolation(ASTViolation):
 
     """
 
-    error_template = 'Found incorrect unpacking target'
+    error_template = 'Found wrong retrieving of the first element'
     code = 467

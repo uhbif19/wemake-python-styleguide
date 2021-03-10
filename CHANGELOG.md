@@ -20,7 +20,7 @@ Semantic versioning in our case means:
 
 ### Features
 
-* Forbids getting first element of list by unpacking
+- Forbids getting first element of list by unpacking
 
 
 ## 0.15.2
